@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+<div class="product-big-title-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="product-bit-title text-center">
+                    <h2>{{ title }}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> <!-- End Page title area -->
+
+
+<div class="single-product-area">
+    <div class="zigzag-bottom"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="single-sidebar">
+                    <h2 class="sidebar-title">Тауарды іздеу</h2>
+                    <form action="{% url 'search' %}" method="get">
+                        <input type="text" placeholder="Тауарды іздеу..." name="q">
+                        <input type="submit" value="Іздеу">
+                    </form>
+                </div>
+
+            </div>
+
+            <div class="col-md-8">
+                <div class="product-content-right">
+                    <div class="woocommerce">
+                        <form method="post" action="#">
+                            <table cellspacing="0" class="shop_table cart">
+                                <thead>
+                                <tr>
+                                    <th class="product-thumbnail">&nbsp;Сурет</th>
+                                    <th class="product-name">Тауар аты</th>
+                                    <th class="product-price">бағасы</th>
+                                    <th class="product-quantity">&nbsp;Саны&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                    <th class="product-subtotal">Барлығы</th>
+                                </tr>
+                                </thead>
+                                <tbody>{% for item in items %}
+                                <tr class="cart_item">
+
+                                    <td class="product-thumbnail">
+                                        <a href=""><img width="145" height="145"
+                                                        alt="poster_1_up"
+                                                        class="shop_thumbnail"
+                                                        src="{{ item.product.image.url }}"></a>
+                                    </td>
+
+                                    <td class="product-name">
+                                        <a href="{% url 'single_product' item.product.category.slug item.product.slug %}">{{ item.product.name }}</a>
+                                    </td>
+
+                                    <td class="product-price">
+                                        <span class="amount">{{ item.product.price }} ₸</span>
+                                    </td>
+
+                                    <td class="product-quantity">
+                                        <div class="quantity buttons_added">
+                                            <a href="" data-product="{{ item.product.id }}" data-action="remove"
+                                               class="minus update-cart">-
+                                            </a>
+
+                                            {{ item.quantity }}
+                                            <a href="" data-product="{{ item.product.id }}" data-action="add"
+                                               class="plus update-cart">+
+                                            </a>
+                                        </div>
+                                    </td>
+
+                                    <td class="product-subtotal">
+                                        <span class="amount">{{ item.get_total }} ₸</span>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+
+                                </tbody>
+                            </table>
+                        </form>
+
+                        <div class="cart-collaterals">
+
+
+                            <div class="cross-sells">
+                                <h2>СІЗДІ ҚЫЗЫҚТЫРУЫ МҮМКІН...</h2>
+                                <ul class="products">
+                                    {% for product in products %}
+                                    <li class="product">
+                                        <a href="{% url 'single_product' product.category.slug product.slug %}">
+                                            <img width="325" height="325" alt="T_4_front"
+                                                 class="attachment-shop_catalog wp-post-image"
+                                                 src="{{ product.image.url }}">
+                                            <h3>{{ product.name }}</h3>
+                                        </a>
+
+
+                                    </li>
+                                    {% endfor %}
+
+                                </ul>
+                            </div>
+
+
+                            <div class="cart_totals ">
+                                <h2 class="text-center">Жалпы себет</h2>
+
+                                <table cellspacing="0">
+                                    <tbody>
+                                    <tr class="cart-subtotal">
+                                        <th>Саны</th>
+                                        <td><span class="amount">{{ order.get_cart_items }}</span></td>
+                                    </tr>
+
+                                    <tr class="shipping">
+                                        <th>Жеткізу</th>
+                                        <td>Тегін</td>
+                                    </tr>
+
+                                    <tr class="order-total">
+                                        <th>Жалпы сумма</th>
+                                        <td><strong><span class="amount">{{ order.get_cart_total }} ₸</span></strong>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <a class="add_to_cart_button text-center" href="{% url 'checkout' %}"><h2
+                                    style="color:white;">Тапсырыс беру</h2></a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}

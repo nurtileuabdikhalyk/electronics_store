@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+<div class="product-big-title-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="product-bit-title text-center">
+                    <h2>{{ title }}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="single-product-area">
+    <div class="zigzag-bottom"></div>
+    <div class="container">
+        <div class="row">
+
+
+            <div class="col-md-6">
+                <div class="product-content-right">
+                    <div class="woocommerce">
+                        <form method="post" class="checkout" action="{% url 'checkout' %}">
+                            {% csrf_token %}
+                            <p
+                                    class="form-row form-row-first validate-required">
+                                <label class="">Тапсырыс беруші *
+                                </label>
+                                {{ form.customer }}
+
+                            </p>
+                            <p
+                                    class="form-row form-row-first validate-required">
+                                <label class="">Тапсырыс *
+                                </label>
+                                {{ form.order }}
+
+                            </p>
+                            <p
+                                    class="form-row form-row-first validate-required">
+                                <label class="">Телефон *
+                                </label>
+                                {{ form.phone }}
+
+                            </p>
+                            <p
+                                    class="form-row form-row-first validate-required">
+                                <label class="">Көше *
+                                </label>
+                                {{ form.street }}
+
+                            </p>
+                            <p
+                                    class="form-row form-row-first validate-required">
+                                <label class="">Үй №*
+                                </label>
+                                {{ form.home_number }}
+
+                            </p>
+                            <p
+                                    class="form-row form-row-first validate-required">
+                                <label class="">Этаж
+                                </label>
+                                {{ form.floor }}
+
+                            </p>
+                            <p
+                                    class="form-row form-row-first validate-required">
+                                <label class="">Пәтер
+                                </label>
+                                {{ form.door }}
+
+                            </p>
+                             <div class="form-row place-order">
+                                    <button type="submit" class="button alt">Тапсырыс беру</button>
+
+
+
+                                </div>
+                        </form>
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}

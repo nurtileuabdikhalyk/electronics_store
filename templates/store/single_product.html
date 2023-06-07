@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="product-big-title-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="product-bit-title text-center">
+                    <h2>Дүкен</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="single-product-area">
+    <div class="zigzag-bottom"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="single-sidebar">
+                    <h2 class="sidebar-title">Тауарды іздеу</h2>
+                    <form action="{% url 'search' %}" method="get">
+                        <input type="text" placeholder="Тауарды іздеу..." name="q">
+                        <input type="submit" value="Іздеу">
+                    </form>
+                </div>
+
+
+            </div>
+
+            <div class="col-md-8">
+                <div class="product-content-right">
+                    <div class="product-breadcroumb">
+                        <a href="{% url 'home' %}">Басты бет</a>
+                        <a href="{% url 'category' product.category.slug %}">{{ product.category.name }}</a>
+                        <a href="{% url 'single_product' product.category.slug product.slug %}">{{ product.name }}</a>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="product-images">
+
+                                <div class="slider-area">
+                                    <div class="block-slider block-slider4">
+                                        <ul class="" id="bxslider-home4">
+                                            {% for p in product.productshots_set.all %}
+                                            <li>
+                                                <img src="{{ p.image.url }}" alt="Slide">
+
+                                            </li>
+                                            {% endfor %}
+
+                                        </ul>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="product-inner">
+                                <h2 class="product-name">{{ product.name }}</h2>
+                                <div class="product-inner-price">
+                                    <ins>{{ product.price }} ₸</ins>
+                                </div>
+
+                                <form action="" class="cart">
+                                    {% if user.is_authenticated %}
+                                    <button data-product="{{ product.id }}" data-action="add"
+                                            class="add_to_cart_button update-cart" type="submit">Себетке қосу
+                                    </button>
+                                    {% else %}
+                                    <a href="{% url 'account_login' %}"
+                                       class="add_to_cart_button">Себетке қосу</a>
+
+                                    {% endif %}
+                                </form>
+
+                                <div class="product-inner-category">
+                                    <p>Категория: <a href="{% url 'category' product.category.slug %}">{{ product.category.name }}</a>.
+                                </div>
+                                <div class="tab-content">
+                                    <div role="tabpanel" class="tab-pane fade in active" id="home">
+                                        <h2>Тауар сипаттамасы</h2>
+                                        <p>
+                                            {{ product.description|linebreaks|safe }}
+                                        </p>
+
+
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="related-products-wrapper">
+                <h2 class="related-products-title">Ұқсас тауарлар</h2>
+                <div class="related-products-carousel">
+                    {% for p in products %}
+                    <div class="single-product">
+                        <div class="product-f-image">
+                            <img src="{{ p.image.url }}" alt="">
+                            <div class="product-hover">
+                                {% if user.is_authenticated %}
+                                <a href="" data-product="{{ p.id }}" data-action="add"
+                                   class="add-to-cart-link update-cart"><i class="fa fa-shopping-cart"></i>
+                                    Себетке
+                                    қосу</a>
+                                {% else %}
+                                <a href="{% url 'account_login' %}"
+                                   class="add-to-cart-link"><i class="fa fa-shopping-cart"></i>
+                                    Себетке
+                                    қосу</a>
+                                {% endif %}
+                                <a href="{% url 'single_product' p.category.slug p.slug %}" class="view-details-link"><i
+                                        class="fa fa-link"></i> Толығырақ
+                                    ...</a>
+                            </div>
+                        </div>
+
+                        <h2><a href="{% url 'single_product' p.category.slug  p.slug %}">{{ p.name }}</a></h2>
+
+                        <div class="product-carousel-price">
+                            <ins>{{ p.price }} ₸</ins>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

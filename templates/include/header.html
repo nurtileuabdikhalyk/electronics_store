@@ -1,0 +1,83 @@
+{% load static %}
+<div class="header-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+
+            </div>
+
+            <div class="col-md-4">
+                <div class="header-right">
+                    <div class="user-menu">
+                        <ul>
+                            {% if user.is_authenticated %}
+                            <li><a href="#"><i class="fa fa-user"></i> {{ user.username }}</a></li>
+                            <li><a href="{% url 'account_logout' %}"><i class="fa fa-user"></i> Шығу</a></li>
+                            {% else %}
+                            <li><a href="{% url 'account_login' %}"><i class="fa fa-user"></i> Кіру</a></li>
+                            <li><a href="{% url 'account_signup' %}"><i class="fa fa-user"></i> Тіркелу</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> <!-- End header area -->
+
+<div class="site-branding-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="logo">
+                    <h1><a href="./"><img src="{% static 'img/logo.png' %}"></a></h1>
+                </div>
+            </div>
+
+            <div class="col-sm-6">
+                <div class="shopping-item">
+                    <a href="{% url 'cart' %}">Себет - <span class="cart-amunt">{{ order.get_cart_total }} ₸</span> <i
+                            class="fa fa-shopping-cart"></i>
+                        <span class="product-count">{{ cartItems }}</span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> <!-- End site branding area -->
+
+<div class="mainmenu-area">
+    <div class="container">
+        <div class="row">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav"> {% with request.resolver_match.url_name as url_name %}
+                    <li class="{% if url_name == 'home' %} active {% endif %}"><a href="{% url 'home' %}">Басты бет</a>
+                    </li>
+                    <li class="{% if url_name == 'shop' %} active {% endif %}"><a href="{% url 'shop' %}">Дүкен беті</a>
+                    </li>
+                    <li class="dropdown dropdown-small">
+                        <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#"><span
+                                class="key">Категория</span><b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            {% for category in categories %}
+                            <li><a href="{% url 'category' category.slug %}">{{ category.name }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                      {% if user.is_authenticated %}
+                    <li class="{% if url_name == 'cart' %} active {% endif %}"><a href="{% url 'cart' %}">Себет</a></li>
+
+                    {% endif %}
+                    {% endwith %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
